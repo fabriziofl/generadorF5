@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generador de equipos de fútbol 5</title>
+    <style>
+        #team-container {
+            display: flex;
+            justify-content: center;
+        }
+        .player-card {
+            width: 200px;
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generador de equipos de fútbol 5</h1>
+    <p>Ingresa el nombre y el promedio de los 10 jugadores (valores del 1 al 100):</p>
+    <form id="players-form">
+        <label for="player1-name">Nombre del jugador 1:</label>
+        <input type="text" id="player1-name" required>
+        <label for="player1-average">Promedio del jugador 1:</label>
+        <input type="number" id="player1-average" min="1" max="100" required><br>
+
+        <label for="player2-name">Nombre del jugador 2:</label>
+        <input type="text" id="player2-name" required>
+        <label for="player2-average">Promedio del jugador 2:</label>
+        <input type="number" id="player2-average" min="1" max="100" required><br>
+
+        <label for="player3-name">Nombre del jugador 3:</label>
+        <input type="text" id="player3-name" required>
+        <label for="player3-average">Promedio del jugador 3:</label>
+        <input type="number" id="player3-average" min="1" max="100" required><br>
+
+        <label for="player4-name">Nombre del jugador 4:</label>
+        <input type="text" id="player4-name" required>
+        <label for="player4-average">Promedio del jugador 4:</label>
+        <input type="number" id="player4-average" min="1" max="100" required><br>
+
+        <label for="player5-name">Nombre del jugador 5:</label>
+        <input type="text" id="player5-name" required>
+        <label for="player5-average">Promedio del jugador 5:</label>
+        <input type="number" id="player5-average" min="1" max="100" required><br>
+
+        <label for="player6-name">Nombre del jugador 6:</label>
+        <input type="text" id="player6-name" required>
+        <label for="player6-average">Promedio del jugador 6:</label>
+        <input type="number" id="player6-average" min="1" max="100" required><br>
+
+        <label for="player7-name">Nombre del jugador 7:</label>
+        <input type="text" id="player7-name" required>
+        <label for="player7-average">Promedio del jugador 7:</label>
+        <input type="number" id="player7-average" min="1" max="100" required><br>
+
+        <label for="player8-name">Nombre del jugador 8:</label>
+        <input type="text" id="player8-name" required>
+        <label for="player8-average">Promedio del jugador 8:</label>
+        <input type="number" id="player8-average" min="1" max="100" required><br>
+
+        <label for="player9-name">Nombre del jugador 9:</label>
+        <input type="text" id="player9-name" required>
+        <label for="player9-average">Promedio del jugador 9:</label>
+        <input type="number" id="player9-average" min="1" max="100" required><br>
+
+        <label for="player10-name">Nombre del jugador 10:</label>
+        <input type="text" id="player10-name" required>
+        <label for="player10-average">Promedio del jugador 10:</label>
+        <input type="number" id="player10-average" min="1" max="100" required><br>
+
+        <button type="submit">Generar equipos</button>
+    </form>
+
+    <h2>Equipos generados:</h2>
+    <div id="team-container"></div>
+
+    <script>
+        document.getElementById('players-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var players = [];
+
+            for (var i = 1; i <= 10; i++) {
+                var playerName = document.getElementById('player' + i + '-name').value;
+                var playerAverage = parseInt(document.getElementById('player' + i + '-average').value);
+
+                if (!playerName || isNaN(playerAverage)) {
+                    alert('Ingresa el nombre y el promedio de todos los jugadores.');
+                    return;
+                }
+
+                players.push({ name: playerName, average: playerAverage });
+            }
+
+            players.sort(function(a, b) { return b.average - a.average; });
+
+            var team1 = [];
+            var team2 = [];
+
+            for (var j = 0; j < players.length; j++) {
+                if (j % 2 === 0) {
+                    team1.push(players[j]);
+                } else {
+                    team2.push(players[j]);
+                }
+            }
+
+            displayTeams(team1, team2);
+        });
+
+        function displayTeams(team1, team2) {
+            var teamContainer = document.getElementById('team-container');
+            teamContainer.innerHTML = '';
+
+            var team1Html = '<div class="player-card"><h3>Equipo 1</h3>';
+            var team2Html = '<div class="player-card"><h3>Equipo 2</h3>';
+
+            var total1 = team1.reduce((a, b) => a + b.average, 0);
+            var total2 = team2.reduce((a, b) => a + b.average, 0);
+            var average1 = total1 / team1.length;
+            var average2 = total2 / team2.length;
+
+            for (var k = 0; k < team1.length; k++) {
+                team1Html += '<p>' + team1[k].name + ': ' + team1[k].average + '</p>';
+            }
+
+            for (var l = 0; l < team2.length; l++) {
+                team2Html += '<p>' + team2[l].name + ': ' + team2[l].average + '</p>';
+            }
+
+            team1Html += '<p>Promedio: ' + average1.toFixed(2) + '</p></div>';
+            team2Html += '<p>Promedio: ' + average2.toFixed(2) + '</p></div>';
+
+            teamContainer.innerHTML = team1Html + team2Html;
+        }
+    </script>
+</body>
+</html>
